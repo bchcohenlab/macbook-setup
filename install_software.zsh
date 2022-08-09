@@ -1,19 +1,19 @@
 #!/bin/zsh
 # Script to set up Alex's neuroimaging environment on a mac
 
-echo "This will set up your zsh environment and install a bunch of useful software"
+echo "This will set up your zsh environment and install a bunch of useful software on an Apple Silicon Mac"
 
 if [[ `arch` = "i386" ]]; then
-  echo "This is a Rosetta terminal"
+  echo "This is an Intel Mac or a Rosetta terminal"
   exit
 else
-  echo "This is an Apple Silicon terminal"
+  echo "This is an Apple Silicon mac/terminal"
 fi
 
 # Install the Apple Silicon Homebrew if needed
 echo ""
 if [ ! -f /opt/homebrew/bin/brew ]; then
-	echo "1) Found brew"
+	echo "1) Found Apple Silicon brew"
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 else
 	echo "1) Installing brew"
@@ -69,21 +69,71 @@ brew install --cask \
 	zotero
 qlmanage -r
 
+# Install the Intel/Rosetta Homebrew if needed
+if [ ! -f /usr/local/bin/brew ]; then
+	echo "2) Found Intel brew"
+else
+	echo "2) Installing Intel/Rosetta brew and aliasing to brow (old brew)"
+	/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+	arch --x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	echo "alias brow='arch --x86_64 /usr/local/Homebrew/bin/brew'" >> ~/.zshrc
+fi
 
-# programs that don't have Universal Binaries yet
-echo "Building programs from source, this may take up to 30 minutes"
-brew install --build-from-source \
-	git-annex
-
-
-# Install ITK-SNAP if needed
+# Install ITK-SNAP if needed (Intel version)
 echo ""
 if hash itksnap; then
 	echo "3) Found ITK-SNAP"
 else
 	echo "3) Installing ITK-SNAP"
-	brew install --cask itk-snap
+	brow install --cask itk-snap
 	echo 'export PATH=$PATH:/Applications/ITK-SNAP.app/Contents/bin' >> ~/.zshenv
+fi
+
+# Install basic utilities
+echo ""
+echo "4) Installing python and octave as Intel apps for compatibility"
+brow upgrade
+brow upgrade --cask 
+brow install \
+  git-annex \
+  octave
+brow install --cask \
+	anaconda \
+
+# Initialize conda
+/usr/local/anaconda3/bin/conda init zsh
+
+
+# Install FSL if needed
+echo ""
+if hash fsl; then
+	echo "5) Found FSL"
+else
+	if [ -d "/usr/local/anaconda3/envs/py2" ]; then
+		echo "4a) Found python2"
+	else
+		echo "4a) Creating a python2 conda environment first"
+		conda create --name py2 python=2.7 -y
+		conda activate py2
+	fi
+	echo "5) Installing FSL (Intel arch)"
+	wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
+	arch --x86_64 python2 fslinstaller.py -q
+	rm fslinstaller.py
+fi
+
+
+# Install PALM if needed
+echo ""
+if hash palm; then
+	echo "5) Found PALM"
+else
+	echo "5) Installing PALM (Intel arch)"
+	git clone https://github.com/andersonwinkler/PALM.git ~/repos/palm
+	pushd ~/repos/palm/fileio/@file_array/private
+		arch --x86_64 ./compile.sh
+	popd
+	echo 'export PATH=$PATH:~/repos/palm' >> ~/.zshenv
 fi
 
 
