@@ -99,11 +99,11 @@ brow install \
   git-annex \
   octave
 brow install --cask \
-	anaconda \
+	miniconda \
 	freesurfer
 
 # Initialize conda
-/usr/local/anaconda3/bin/conda init zsh
+/usr/local/miniconda3/bin/conda init zsh
 
 
 # Install FSL if needed
@@ -111,7 +111,7 @@ echo ""
 if hash fsl; then
 	echo "5) Found FSL"
 else
-	if [ -d "/usr/local/anaconda3/envs/py2" ]; then
+	if [ -d "/usr/local/miniconda3/envs/py2" ]; then
 		echo "4a) Found python2"
 	else
 		echo "4a) Creating a python2 conda environment first"
