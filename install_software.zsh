@@ -99,11 +99,11 @@ brow install \
   git-annex \
   octave
 brow install --cask \
-	miniconda \
+	mambaforge \
 	freesurfer
 
 # Initialize conda
-/usr/local/miniconda3/bin/conda init zsh
+conda init "$(basename "${SHELL}")"
 
 
 # Install FSL if needed
@@ -111,7 +111,7 @@ echo ""
 if hash fsl; then
 	echo "5) Found FSL"
 else
-	if [ -d "/usr/local/miniconda3/envs/py2" ]; then
+	if [ -d "/usr/local/Caskroom/mambaforge/base/envs/py2" ]; then
 		echo "4a) Found python2"
 	else
 		echo "4a) Creating a python2 conda environment first"
@@ -135,24 +135,20 @@ else
 	pushd ~/repos/palm/fileio/@file_array/private
 		arch --x86_64 ./compile.sh
 	popd
-	echo 'export PATH=$PATH:~/repos/palm' >> ~/.zshenv
+	echo 'export PATH=$PATH:~/repos/PALM' >> ~/.zshenv
 fi
 
 
 # Install NIMLAB conda environment if needed
-if [ -d "/usr/local/anaconda3/envs/py2" ]; then
+if [ -d "/usr/local/Caskroom/mambaforge/base/envs/nimlab_py310" ]; then
 	echo "6) Found nimlab conda env"
 else
 	echo "6a) Authorize your computer with github (choose the defaults and web-based authentication)"
 	gh auth login
 	
 	echo "6b) Building NIMLAB conda environment"
-	conda update -y conda
-	conda install -y mamba
-	conda create -y -n nimlab_py310 python=3.10
+	mamba create -y -n nimlab_py310 python=3.10
 	conda activate nimlab_py310
-	conda config --add channels conda-forge 
-	conda config --set channel_priority strict
 	mamba install -y fslpy \
 	h5py \
 	hdf5 \
@@ -172,11 +168,10 @@ else
 	
 	mkdir -p repos/nimlab
 	pushd repos/nimlab
-		gh repo clone nimlab/software_env.git
-		python -m pip install python_modules/nimlab
-		python -m pip install python_modules/meta_editor
+		gh repo clone nimlab/software_env
+		python -m pip install software_env/python_modules/nimlab
+		python -m pip install software_env/python_modules/meta_editor
 	popd
-	python -m pip install datalad --upgrade
 	python -m ipykernel install --user --name nimlab_py310 --display-name "Python3.10 (nimlab)"
 	if [[ ! -d ~/setup ]]; then
 	    mkdir -p ~/setup
