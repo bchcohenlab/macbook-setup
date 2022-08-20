@@ -40,6 +40,7 @@ brew install \
 	rclone \
 	rsync \
 	tig \
+	tmux \
 	tree \
 	wget
 brew install --cask \
@@ -63,7 +64,6 @@ brew install --cask \
 	sublime-text \
 	sublime-merge \
 	syntax-highlight \
-	tmux \
 	visual-studio-code \
 	xquartz \
 	zoom \
@@ -71,7 +71,7 @@ brew install --cask \
 qlmanage -r
 
 # Install the Intel/Rosetta Homebrew if needed
-if [ ! -f /usr/local/bin/brew ]; then
+if [ -f /usr/local/bin/brew ]; then
 	echo "2) Found Intel brew"
 else
 	echo "2) Installing Intel/Rosetta brew and aliasing to brow (old brew)"
