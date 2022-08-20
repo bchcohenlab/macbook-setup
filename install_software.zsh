@@ -8,6 +8,9 @@ if [[ `arch` = "i386" ]]; then
   exit
 else
   echo "This is an Apple Silicon mac/terminal"
+  # Install Rosetta 2 if not already installed
+	echo "0) Installing Rosetta2 if not already installed"
+	sudo softwareupdate --install-rosetta
 fi
 
 # Install the Apple Silicon Homebrew if needed
