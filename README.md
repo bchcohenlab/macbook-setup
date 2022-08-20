@@ -8,10 +8,10 @@ Currently only the `install_software.zsh` script is correct.
 2. update OS X
 3. Open terminal and run the following commands:
 ```
-mkdir -p repos/bchcohenlab
-cd repos/bchcohenlab
-git clone gh repo clone bchcohenlab/macbook-setup
-cd macbook-setup
+mkdir -p ~/repos/bchcohenlab
+cd ~/repos/bchcohenlab
+git clone https://github.com/bchcohenlab/macbook-setup.git
+cd ~/repos/bchcohenlab/macbook-setup
 ./install_software.zsh
 ```
 
