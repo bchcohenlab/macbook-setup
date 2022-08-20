@@ -12,7 +12,7 @@ fi
 
 # Install the Apple Silicon Homebrew if needed
 echo ""
-if [ ! -f /opt/homebrew/bin/brew ]; then
+if [ -f /opt/homebrew/bin/brew ]; then
 	echo "1) Found Apple Silicon brew"
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 else
