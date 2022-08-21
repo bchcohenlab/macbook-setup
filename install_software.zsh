@@ -81,6 +81,7 @@ else
 	/usr/sbin/softwareupdate --install-rosetta --agree-to-license
 	arch --x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	echo "alias brow='arch --x86_64 /usr/local/Homebrew/bin/brew'" >> ~/.zshrc
+	alias brow='arch --x86_64 /usr/local/Homebrew/bin/brew'
 fi
 
 # Install ITK-SNAP if needed (Intel version)
