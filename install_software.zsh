@@ -154,12 +154,9 @@ fi
 
 # Install NIMLAB conda environment if needed
 if [ -d "/usr/local/Caskroom/mambaforge/base/envs/nimlab_py310" ]; then
-	echo "7) Found nimlab conda env"
+	echo "7a) Found nimlab conda env"
 else
-	echo "7a) Authorize your computer with github (choose the defaults and web-based authentication)"
-	gh auth login
-	
-	echo "7b) Building NIMLAB conda environment"
+	echo "7a) Building NIMLAB conda environment"
 	mamba create -y -n nimlab_py310 python=3.10
 	conda activate nimlab_py310
 	mamba install -y fslpy \
@@ -179,18 +176,23 @@ else
 	sshpass \
 	statsmodels
 	
-	mkdir -p repos/nimlab
-	pushd repos/nimlab
-		gh repo clone nimlab/software_env
-		python -m pip install software_env/python_modules/nimlab
-		python -m pip install software_env/python_modules/meta_editor
-	popd
-	python -m ipykernel install --user --name nimlab_py310 --display-name "Python3.10 (nimlab)"
-	if [[ ! -d ~/setup ]]; then
-	    mkdir -p ~/setup
-	fi
-	cp -f ~/repos/nimlab/software_env/native_install/mac_config.yaml ~/setup/nimlab_config.yaml
 fi
+
+echo "7b) Installing/Updating nimlab python code from github"
+if [[ ! -d ~/repos/nimlab ]]; then
+	mkdir -p ~/repos/nimlab
+fi
+pushd ~/repos/nimlab
+	gh auth login
+	gh repo clone nimlab/software_env
+	python -m pip install software_env/python_modules/nimlab
+	python -m pip install software_env/python_modules/meta_editor
+popd
+python -m ipykernel install --user --name nimlab_py310 --display-name "Python3.10 (nimlab)"
+if [[ ! -d ~/setup ]]; then
+	mkdir -p ~/setup
+fi
+cp -f ~/repos/nimlab/software_env/native_install/mac_config.yaml ~/setup/nimlab_config.yaml
 
 
 echo ""
