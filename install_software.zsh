@@ -10,7 +10,12 @@ else
   echo "This is an Apple Silicon mac/terminal"
   # Install Rosetta 2 if not already installed
 	echo "0) Installing Rosetta2 if not already installed"
-	sudo softwareupdate --install-rosetta
+	if [ ! -f /usr/local/bin/brew ]; then
+		echo "0b) Intel brew not installed, triggering Rosetta install just in case"
+		sudo softwareupdate --install-rosetta
+	else
+		echo "0b) Found Intel brew, Rosetta must be installed"
+	fi
 fi
 
 # Install the Apple Silicon Homebrew if needed
