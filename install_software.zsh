@@ -121,6 +121,7 @@ else
 	echo 'export FREESURFER_HOME=$HOME/freesurfer' >> ~/.zshenv
 	echo 'export SUBJECTS_DIR=$FREESURFER_HOME/subjects' >> ~/.zshenv
 	echo 'source $FREESURFER_HOME/SetUpFreeSurfer.sh' >> ~/.zshenv
+fi
 
 # Initialize conda
 conda init "$(basename "${SHELL}")"
