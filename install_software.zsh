@@ -76,6 +76,7 @@ qlmanage -r
 # Install the Intel/Rosetta Homebrew if needed
 if [ -f /usr/local/bin/brew ]; then
 	echo "2) Found Intel brew"
+	alias brow='arch --x86_64 /usr/local/Homebrew/bin/brew'
 else
 	echo "2) Installing Intel/Rosetta brew and aliasing to brow (old brew)"
 	/usr/sbin/softwareupdate --install-rosetta --agree-to-license
