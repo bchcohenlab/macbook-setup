@@ -118,7 +118,7 @@ if hash freeview; then
 	echo "4b) Found freesurfer"
 else
 	echo "4b) Setting freesurfer paths"
-	echo 'export FREESURFER_HOME=$HOME/freesurfer' >> ~/.zshenv
+	echo 'export FREESURFER_HOME=/Applications/freesurfer' >> ~/.zshenv
 	echo 'export SUBJECTS_DIR=$FREESURFER_HOME/subjects' >> ~/.zshenv
 	echo 'source $FREESURFER_HOME/SetUpFreeSurfer.sh' >> ~/.zshenv
 fi
