@@ -132,8 +132,9 @@ else
 	fi
 	echo "5) Installing FSL (Intel arch)"
 	wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
-	arch --x86_64 python2 fslinstaller.py -q
+	arch --x86_64 python2 fslinstaller.py -q -d /usr/local/fsl
 	rm fslinstaller.py
+	conda deactivate
 fi
 
 
