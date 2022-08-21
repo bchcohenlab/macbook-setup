@@ -109,6 +109,7 @@ brow install --cask \
 
 # Initialize conda
 conda init "$(basename "${SHELL}")"
+. ~/.zshrc
 
 
 # Install FSL if needed
