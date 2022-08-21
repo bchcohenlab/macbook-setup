@@ -119,6 +119,7 @@ if hash fsl; then
 else
 	if [ -d "/usr/local/Caskroom/mambaforge/base/envs/py2" ]; then
 		echo "4a) Found python2"
+		conda activate py2
 	else
 		echo "4a) Creating a python2 conda environment first"
 		conda create --name py2 python=2.7 -y
