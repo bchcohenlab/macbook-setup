@@ -123,14 +123,14 @@ if hash fsl; then
 	echo "5) Found FSL"
 else
 	if [ -d "/usr/local/Caskroom/mambaforge/base/envs/py2" ]; then
-		echo "4a) Found python2"
+		echo "5a) Found python2"
 		conda activate py2
 	else
-		echo "4a) Creating a python2 conda environment first"
+		echo "5a) Creating a python2 conda environment first"
 		conda create --name py2 python=2.7 -y
 		conda activate py2
 	fi
-	echo "5) Installing FSL (Intel arch)"
+	echo "5b) Installing FSL (Intel arch)"
 	wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
 	arch --x86_64 python2 fslinstaller.py -q -d /usr/local/fsl
 	rm fslinstaller.py
@@ -141,9 +141,9 @@ fi
 # Install PALM if needed
 echo ""
 if hash palm; then
-	echo "5) Found PALM"
+	echo "6) Found PALM"
 else
-	echo "5) Installing PALM (Intel arch)"
+	echo "6) Installing PALM (Intel arch)"
 	git clone https://github.com/andersonwinkler/PALM.git ~/repos/PALM
 	pushd ~/repos/palm/fileio/@file_array/private
 		arch --x86_64 ./compile.sh
@@ -154,12 +154,12 @@ fi
 
 # Install NIMLAB conda environment if needed
 if [ -d "/usr/local/Caskroom/mambaforge/base/envs/nimlab_py310" ]; then
-	echo "6) Found nimlab conda env"
+	echo "7) Found nimlab conda env"
 else
-	echo "6a) Authorize your computer with github (choose the defaults and web-based authentication)"
+	echo "7a) Authorize your computer with github (choose the defaults and web-based authentication)"
 	gh auth login
 	
-	echo "6b) Building NIMLAB conda environment"
+	echo "7b) Building NIMLAB conda environment"
 	mamba create -y -n nimlab_py310 python=3.10
 	conda activate nimlab_py310
 	mamba install -y fslpy \
