@@ -19,4 +19,4 @@ cd ~/repos/bchcohenlab/macbook-setup
 
 ## To-do List
 - [ ] Make an Intel Mac version
-- [ ] Double check that you can re-run the script without breaking things
+- [ ] Install Xcode Command Line tools FIRST
