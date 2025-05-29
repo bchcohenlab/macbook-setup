@@ -43,7 +43,9 @@ brew install \
 	dcm2niix \
 	gh \
 	git \
+	git-annex \
 	htop \
+	octave \
 	parallel \
 	rclone \
 	rsync \
@@ -103,12 +105,11 @@ echo ""
 echo "4) Installing Intel-only apps and python and octave as Intel apps for compatibility"
 brow upgrade
 brow upgrade --cask 
-brow install \
-  git-annex \
-  octave
+# brow install \
+#  [packages] \
 brow install --cask \
 	slicer \
-	mambaforge \
+	miniforge \
 	freesurfer
 
 # Set Freesurfer Paths
