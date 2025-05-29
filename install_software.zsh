@@ -57,7 +57,6 @@ brew install --cask \
 	google-drive \
 	horos \
 	iterm2 \
-	lepton \
 	microsoft-office \
 	obsidian \
 	osirix-quicklook \
@@ -68,7 +67,6 @@ brew install --cask \
 	rectangle \
 	rstudio \
 	slack \
-	slicer \
 	sublime-text \
 	sublime-merge \
 	syntax-highlight \
@@ -102,13 +100,14 @@ fi
 
 # Install basic utilities
 echo ""
-echo "4) Installing python and octave as Intel apps for compatibility"
+echo "4) Installing Intel-only apps and python and octave as Intel apps for compatibility"
 brow upgrade
 brow upgrade --cask 
 brow install \
   git-annex \
   octave
 brow install --cask \
+	slicer \
 	mambaforge \
 	freesurfer
 
