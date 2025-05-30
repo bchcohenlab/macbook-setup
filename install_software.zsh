@@ -54,6 +54,7 @@ brew install \
 	tree \
 	wget
 brew install --cask \
+	chatgpt \
 	docker \
 	github \
 	google-drive \
@@ -133,23 +134,8 @@ echo ""
 if hash fsl; then
 	echo "5) Found FSL"
 else
-	if [ -d "/usr/local/Caskroom/mambaforge/base/envs/py2" ]; then
-		echo "5a) Found python2"
-		conda activate py2
-	else
-		echo "5a) Creating a python2 conda environment first"
-		conda create --name py2 python=2.7 -y
-		conda activate py2
-	fi
-	echo "5b) Installing FSL (Intel arch)"
-	wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py
-	arch --x86_64 python2 fslinstaller.py -d /usr/local/fsl
-	rm fslinstaller.py
-	echo 'FSLDIR=/usr/local/fsl' >> ~/.zshenv
-	echo '. ${FSLDIR}/etc/fslconf/fsl.sh' >> ~/.zshenv
-	echo 'PATH=${FSLDIR}/bin:${PATH}' >> ~/.zshenv
-	echo 'export FSLDIR PATH' >> ~/.zshenv
-	conda deactivate
+	echo "5) Installing FSL (ARM arch)"
+	curl -Ls https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/releases/getfsl.sh | sh -s -- /usr/local/fsl
 fi
 
 
